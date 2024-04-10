@@ -2,14 +2,13 @@ package com.example.LibraryManagement.Services;
 
 import com.example.LibraryManagement.Entity.Book;
 import com.example.LibraryManagement.Repository.BookRepository;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class BookService {
@@ -38,5 +37,13 @@ public class BookService {
             bookRepository.save(updatedBook);
         }
         return ResponseEntity.status(200).body("Book has been updated successfully");
+    }
+    public ResponseEntity<String> deleteBook(int id){
+        Book deletedBook = bookRepository.findById(id).orElse(null);
+        if(deletedBook!= null){
+            bookRepository.deleteById(id);
+            return ResponseEntity.status(200).body("Book has been deleted successfully");
+        }
+        return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("No such a book");
     }
 }
