@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 
 
 @Entity
@@ -19,7 +20,7 @@ import lombok.Setter;
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @Column(name = "title")
@@ -33,5 +34,10 @@ public class Book {
 
     @Column(name = "ISBN")
     private long isbn13;
+    @ManyToOne
+    @JoinColumn(name = "patron_id") // Foreign key column
+    private Patron patron;
+    @Column(name = "return_date")
+    private LocalDate returnDate; // New field for return da
 
 }
